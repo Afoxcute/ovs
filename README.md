@@ -1,5 +1,5 @@
 # OnchainVampireSurvivors
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/logo.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/logo.png?raw=true)
 ## Inspiration
 
 I used to be obsessed with a very popular game called "Vampire Survivor" which can be played on Steam. I was addicted to this game some time ago. I would play it for at least half an hour, or even several hours each time.
@@ -10,13 +10,13 @@ I think only interesting web3 games are likely to be widely used, while games th
 OnchainVampireSurvivors is a time survival game with minimal gameplay and roguelite elements. It uses **Push SDK** (Push Chain) technology to allow players to use various methods, such as commonly used social accounts (Google, Apple, Facebook), email, mobile phone number, passkey and more than 350 web3 wallets through Universal Account (UEA) integration.
 The game uses a unique algorithm mechanism to optimize the game value, so that players can immerse themselves in a state of continuous tension and excitement. I created a specific algorithm in the smart contract and created an on-chain ranking list, which is very likely to reduce gas consumption without affecting the sorting efficiency. At the same time, I also simply implemented a unique lottery mechanism for players to draw cards.
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/2.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/2.png?raw=true)
 
 Using the introduction of the original Vampire Survivors game to explain the game values ​​of OnchainVampireSurvivors: Monsters are everywhere, and you are nowhere to escape. All you can do is survive as long as possible until death inevitably ends your struggle. Collect gold in each run to buy upgrades and help the next survivor.
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/7.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/7.png?raw=true)
 
-[Click to play OnchainVampireSurvivors](https://catkevin.github.io/OnchainVampireSurvivors/)
+[Click to play OnchainVampireSurvivors](https://lucent-crumble-2d417a.netlify.app/)
 
 Tips: Please use chrome browser to open.
 
@@ -26,7 +26,7 @@ Tips: Please use chrome browser to open.
 ### 1、Loading Scene
 - Wait for the progress bar to end, select the wallet you want to interact with or log in with your social account, and then start the game
   
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/1.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/1.png?raw=true)
 
 ### 2、Home Scene
 - On the homepage, you can see various game data, such as the number of gold coins and diamonds, network icon, wallet address, etc., as well as game characters and weapons, and of course the scrolling background and LOGO I drew specifically for PUSH Testnet.
@@ -34,21 +34,21 @@ Tips: Please use chrome browser to open.
 - Click the Start Game button, you need to pay 0.01 PUSH for the gas token, then wait for a moment and enter the game after the transaction is completed.
 - When you start the game, you need to pay 0.01 PUSH as the ticket fee to participate in the game, and this fee will be directly distributed to outstanding players in the current ranking as a game incentive. (If you can maintain a high ranking, it means you can earn a huge amount of PUSH tokens)
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/2.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/2.png?raw=true)
 
 #### 2.1 Weapon Page
 - Players can select, purchase and upgrade weapons on this page.
 - You can get gold coins by purchasing, drawing prizes and participating in games.
 - You can only get diamonds and get cooler and more advanced weapons through lottery. (lottery is one of the easiest ways to get high-level weapons)
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/3.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/3.png?raw=true)
 
 #### 2.2 Characters/Skins Page
 
 - Players can purchase and upgrade game characters on this page. 
 - I have drawn many characters of this type, but due to time constraints, I only show four characters here.
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/4.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/4.png?raw=true)
 
 #### 2.3 Lottery Page
 
@@ -56,20 +56,20 @@ Tips: Please use chrome browser to open.
 - A VRF random extraction function is implemented to ensure the fairness and randomness of the lottery.
 - If you want to experience the Howitzer and Gatling as soon as possible, please come and participate in our lucky draw!
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/5.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/5.png?raw=true)
 
 #### 2.4 Onchain ranking page
 - Here you can see the player ranking data, and you can see kills and time of each item.
 - At the bottom you can view the update time of the current chain's ranking.
 - This ranking list can be scrolled up and down, and currently stores the top ten data of rankings.
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/6.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/6.png?raw=true)
 
 ### 3、Game Scene
 - After entering the game, players can use the "W", "S", "A" and "D" keys on the computer keyboard to control the character's movement up, down, left and right.（You can see this keyboard button in the lower right corner of the page）
 - By controlling the player to avoid monsters, use weapons to kill monsters, then extract experience points, and obtain more interesting skills through upgrades.
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/7.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/7.png?raw=true)
 
 - You can click on the avatar in the upper left corner to view the attributes of the current character.
 - The top of the screen shows the character's level and skills.
@@ -77,11 +77,11 @@ Tips: Please use chrome browser to open.
 - The rest is up to you to experience! I designed a very interesting algorithm to control the generation of monsters, so that players are always in a state of tension and immersed in the game.
 - This is why I developed the game! I hope the game can bring happiness to everyone, not boring airdrops.
   
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/10.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/10.png?raw=true)
 
 - On the game settlement page, you need to click the Submit button to spread this valuable game data to PUSH Testnet, so that players around the world can see your outstanding performance!!
 
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/9.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/9.png?raw=true)
 
 
 
@@ -128,7 +128,7 @@ I completed this project during this days. The time was very tight and the workl
 
 ### 1、logo
 I use Photoshop to draw the game logo and most of the game assets
-![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/logo.png?raw=true)
+![Alt text](https://github.com/Afoxcute/ovs/blob/main/images/logo.png?raw=true)
 
 ### 2、Gaming (Cocos Creator)
 I used Photoshop to draw most of the game UI and assets. I used **Cocos Creator** as the game engine, implemented various game mechanisms and algorithms, and completed the complete game logic. The game includes:
@@ -218,4 +218,4 @@ I used the Push SDK and the UEAFactory smart contract to implement a full-chain 
 Thank you for your patience in reading this document. It is very long and took you a lot of time! Thank you very much!
 Of course, you are welcome to try my game! Feel the joy of roguelike game!
 
-[Click to play OnchainVampireSurvivors](https://catkevin.github.io/OnchainVampireSurvivors/)
+[Click to play OnchainVampireSurvivors](https://lucent-crumble-2d417a.netlify.app/)
