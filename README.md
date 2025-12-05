@@ -7,7 +7,7 @@ I searched hard on web3 and couldn't find similar games, or even fun games. Asid
 I think only interesting web3 games are likely to be widely used, while games that rely solely on token airdrop or "play to earn" models will be difficult to maintain.
 
 ## What it does
-OnchainVampireSurvivors is a time survival game with minimal gameplay and roguelite elements. It uses ThirdWeb technology to allow players to use various methods, such as commonly used social accounts (Google, Apple, Facebook), email, mobile phone number, passkey and more than 350 web3 wallets.
+OnchainVampireSurvivors is a time survival game with minimal gameplay and roguelite elements. It uses **Push SDK** (Push Chain) technology to allow players to use various methods, such as commonly used social accounts (Google, Apple, Facebook), email, mobile phone number, passkey and more than 350 web3 wallets through Universal Account (UEA) integration.
 The game uses a unique algorithm mechanism to optimize the game value, so that players can immerse themselves in a state of continuous tension and excitement. I created a specific algorithm in the smart contract and created an on-chain ranking list, which is very likely to reduce gas consumption without affecting the sorting efficiency. At the same time, I also simply implemented a unique lottery mechanism for players to draw cards.
 
 ![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/2.png?raw=true)
@@ -85,6 +85,44 @@ Tips: Please use chrome browser to open.
 
 
 
+## Technical Architecture
+
+### Project Structure
+```
+OnchainVampireSurvivors/
+├── gaming/              # Cocos Creator game project
+│   ├── assets/          # Game assets, scripts, scenes
+│   └── scripts/         # TypeScript game logic
+├── web3-api/            # React bridge for Web3 integration
+│   └── src/
+│       └── App.tsx      # Push SDK integration layer
+├── contracts/            # Hardhat smart contract project
+│   └── contracts/
+│       └── Contract.sol # ZKGameClient.sol
+├── docs/                 # Built/deployed game version
+└── images/               # Project screenshots and assets
+```
+
+### Technology Stack
+- **Game Engine**: Cocos Creator (TypeScript)
+- **Web3 Bridge**: React + TypeScript + Vite
+- **Blockchain SDK**: Push SDK (`@pushchain/ui-kit`, `@pushchain/core`)
+- **Smart Contracts**: Solidity ^0.8.22, Hardhat
+- **Blockchain**: Push Chain Testnet
+- **Contract Interaction**: ethers.js v6
+- **Network**: PUSH Testnet (RPC: `https://evm.rpc-testnet-donut-node1.push.org/`)
+
+### Integration Flow
+```
+Cocos Game (TypeScript)
+    ↓
+Web3Mgr (calls window functions)
+    ↓
+React App (App.tsx) - exposes Push SDK
+    ↓
+Push Chain Smart Contract
+```
+
 ## How we built it
 I completed this project during this days. The time was very tight and the workload was huge because it involved game planning, art, gameplay mechanisms and algorithms, as well as smart contracts and interaction logic with the PUSH Testnet.
 
@@ -92,39 +130,87 @@ I completed this project during this days. The time was very tight and the workl
 I use Photoshop to draw the game logo and most of the game assets
 ![Alt text](https://github.com/CatKevin/OnchainVampireSurvivors/blob/main/images/logo.png?raw=true)
 
-### 2、Gaming
-I used Photoshop to draw most of the game UI. I used cocos as the game engine, implemented various game mechanisms and algorithms, and completed the complete game logic. It took a lot of time to realize a complete game. I think most of the time was spent on designing game art and implementing game logic.
+### 2、Gaming (Cocos Creator)
+I used Photoshop to draw most of the game UI and assets. I used **Cocos Creator** as the game engine, implemented various game mechanisms and algorithms, and completed the complete game logic. The game includes:
 
-### 3、Push SDK
-I use Push SDK to greatly reduce the entry threshold for web2 players. Players may not need to create their own wallets, they only need their own social accounts (such as email etc.)  to enter the game. Of course, it also supports the use of most wallets such as metamask to enter the game.
+**Game Systems:**
+- **Survival Mechanics**: WASD movement, monster avoidance, weapon combat
+- **Progression System**: Experience points, leveling, skill upgrades
+- **Weapon System**: Multiple weapon types with upgrade levels
+- **Character System**: Character skins with stat upgrades
+- **Monster AI**: Dynamic spawning algorithm for constant tension
+- **Audio System**: Background music and sound effects
+- **UI System**: Multiple pages (Home, Game, Rankings, Lottery, etc.)
 
-### 4、Hardhat and smart contract
-I used hardhat to write the game's smart contract, which was designed to store various game data, including player assets, weapons, character skins, etc., to ensure the transparency and security of player data. 
-At the same time, a specific algorithm was designed to calculate and store the on-chain rankings to ensure the fairness of competition and incentives among game players. I use a unique algorithm to handle the player's lottery activities, so that the lottery process can happen on the chain! I designed a very smooth interactive page to make players feel involved!
-Then, combined with WebPush SDK, the smart contract was deployed to the PUSH Testnet.
+**Manager Classes:**
+- `CocosZ`: Main game controller
+- `GameMgr`: Game state and logic management
+- `Web3Mgr`: Web3 data management
+- `UIMgr`: UI page management
+- `ResMgr`: Resource loading and caching
+- `AudioMgr`: Audio playback management
+- `DataMgr`: Local data persistence
+
+It took a lot of time to realize a complete game. I think most of the time was spent on designing game art and implementing game logic.
+
+### 3、Push SDK & Web3 API Bridge
+I use **Push SDK** (`@pushchain/ui-kit` and `@pushchain/core`) to greatly reduce the entry threshold for web2 players. Players may not need to create their own wallets, they only need their own social accounts (such as email etc.) to enter the game through Universal Account (UEA). Of course, it also supports the use of most wallets such as MetaMask to enter the game.
+
+**Web3 API Bridge Architecture:**
+Due to the limitations of the Cocos Creator game engine, I created a React-based Web3 API bridge (`web3-api/`) that exposes Push SDK functions to the game engine. This bridge:
+- Handles wallet connection via Push Universal Account
+- Provides read functions: leaderboard, player assets, weapons, skins, lottery results
+- Provides write functions: start game, submit results, buy/upgrade items, lottery, mint gold
+- Exposes all functions on the `window` object for the Cocos game to call
+- Uses ethers.js for contract interactions
+
+### 4、Hardhat and Smart Contract
+I used **Hardhat** to write the game's smart contract (`ZKGameClient.sol`), which was designed to store various game data, including player assets (gold, diamonds), weapons, character skins, game logs, etc., to ensure the transparency and security of player data.
+
+**Smart Contract Features:**
+- **Asset Management**: Player gold, diamonds, weapons, and skins with upgrade levels
+- **On-Chain Leaderboard**: Top 10 rankings using binary search algorithm for gas-efficient sorting
+- **Cross-Chain Support**: Tracks players from different chains using UEAFactory integration
+- **Lottery System**: VRF-based random extraction for fair rewards (gold, diamonds, weapons)
+- **Reward Distribution**: Entry fees (0.01 PUSH) distributed to top-ranked players
+- **Game Logging**: Complete game session tracking with timestamps and statistics
+
+The smart contract was deployed to **PUSH Testnet** at address: `0x72d23067fFFB6C7eE6b2416e2bAFb3a0c8CB27e0`
 
 ### 5、Important!!
 I used the Push SDK and the UEAFactory smart contract to implement a full-chain game leaderboard. This was previously unimaginable! Previously, player scores could only be ranked on a single chain!！！！
 
 ## Challenges we ran into
-Due to the limitations of the game engine, I couldn't use Push SDK or Web3 SDK. I think about it for a long time, about a week, and write a react project to expose the API to the game engine. It allows me to successfully complete various functions supported by Push SDK in the game engine!
+1. **Game Engine Limitations**: Due to the limitations of Cocos Creator game engine, I couldn't directly use Push SDK or Web3 SDK. I spent about a week thinking about this problem and eventually created a React-based bridge project (`web3-api/`) that exposes all Push SDK functions to the game engine via the `window` object. This innovative solution allows the game to successfully complete various functions supported by Push SDK while maintaining the game engine's performance and compatibility.
+
+2. **Cross-Chain Leaderboard Implementation**: Implementing a full-chain game leaderboard using UEAFactory was a significant challenge, as it required understanding how Universal Accounts work across different chains and ensuring proper chain hash tracking for players from various networks.
 
 ## Accomplishments that we're proud of
-- I completed most of the game logic within the time limit.
-- I implemented specific algorithms to keep gamers immersed in the game, or at least give them a constant sense of tension and excitement.
-- Successfully deployed the smart contract to the PUSH Testnet. The PUSH Testnet is very fast and the experience is great!
-- I used the Push SDK and the UEAFactory smart contract to implement a full-chain game leaderboard. It's incredible that I've actually achieved this!！！
+- ✅ **Complete Game Implementation**: Completed full game logic including survival mechanics, weapon systems, character progression, and upgrade systems within the time limit.
+- ✅ **Immersive Gameplay**: Implemented specific algorithms to keep gamers immersed in the game, maintaining constant tension and excitement through dynamic monster spawning and difficulty scaling.
+- ✅ **Smart Contract Deployment**: Successfully deployed the smart contract to PUSH Testnet with comprehensive on-chain game data management.
+- ✅ **Cross-Chain Leaderboard**: Implemented a full-chain game leaderboard using Push SDK and UEAFactory smart contract - this was previously unimaginable! Players from different chains (PUSH, Ethereum, Solana, Base, Arbitrum) can compete on a unified leaderboard.
+- ✅ **Innovative Architecture**: Created a React bridge solution to integrate Push SDK with Cocos Creator, enabling seamless Web3 functionality in a game engine that doesn't natively support Web3 libraries.
+- ✅ **Gas Optimization**: Designed efficient algorithms for on-chain ranking (binary search) and data storage to minimize gas consumption while maintaining functionality.
+- ✅ **Universal Account Integration**: Successfully integrated Push Universal Account (UEA) system, allowing players to use social logins or 350+ Web3 wallets seamlessly.
 
 ## What we learned
-- How to use game engines to realize your ideas
-- How to write smart contracts using a hardhat
-- How to deploy smart contracts to the PUSH Testnet
+- **Game Development**: How to use Cocos Creator game engine to realize complex game mechanics and create engaging gameplay experiences
+- **Smart Contract Development**: How to write, test, and deploy smart contracts using Hardhat, including gas optimization techniques
+- **Blockchain Integration**: How to deploy smart contracts to PUSH Testnet and interact with them using ethers.js
+- **Cross-Chain Technology**: Understanding of Universal Accounts (UEA) and how to implement cross-chain functionality using UEAFactory
+- **Web3 Architecture**: How to bridge Web3 SDKs with game engines that don't natively support them
+- **Push SDK**: Deep understanding of Push Chain SDK and Universal Account system for seamless Web2/Web3 user onboarding
+- **VRF Implementation**: How to implement verifiable random functions for fair lottery systems on-chain
 
 ## What's next for OnchainVampireSurvivors
-- Design more interesting game UI.
-- Improve the reward mechanism so that more top-ranked players can be reasonably allocated more rewards according to the algorithm, thereby increasing player enthusiasm.
-- Currently weapons and character skins are pre-designed. I would like to introduce generative AI technology so that players can draw or generate assets such as weapons and character skins by themselves, which will greatly increase the randomness and fun of the game.
-- Deploy it on PUSH Mainnet.
+- 🎨 **Enhanced UI/UX**: Design more interesting and polished game UI with improved visual feedback
+- 💰 **Improved Reward Mechanism**: Enhance the reward distribution algorithm so that more top-ranked players can be reasonably allocated rewards, increasing player engagement and competition
+- 🤖 **Generative AI Integration**: Introduce generative AI technology so that players can draw or generate custom weapons and character skins, greatly increasing the randomness and fun of the game
+- 🚀 **Mainnet Deployment**: Deploy the game to PUSH Mainnet for production use
+- 📊 **Analytics & Metrics**: Add comprehensive analytics to track player behavior and game performance
+- 🎮 **Additional Game Modes**: Expand gameplay with new modes, challenges, and seasonal events
+- 🔐 **Enhanced Security**: Implement additional security measures and potentially ZK-proof verification for game results
 
 
 
